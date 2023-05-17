@@ -7,6 +7,7 @@ import (
 	"github.com/urfave/cli"
 	"os"
 	"sort"
+	"strconv"
 )
 
 var Show cli.Command
@@ -34,21 +35,29 @@ func showAction(c *cli.Context) error {
 	}
 
 	sort.Slice(memos, func(i, j int) bool {
-		return memos[i].Priority < memos[j].Priority
+		switch c.String("sort") {
+		case "p", "priority":
+			return memos[i].Priority < memos[j].Priority
+		case "d", "date":
+			return memos[i].Date > memos[j].Date
+		}
+
+		return memos[i].Date > memos[j].Date
 	})
 
 	table := tablewriter.NewWriter(os.Stdout)
-	table.SetHeader([]string{"Name", "Date", "Content", "Priority"})
+	table.SetHeader([]string{"Num", "Name", "Date", "Content", "Priority"})
 	table.SetHeaderColor(tablewriter.Colors{tablewriter.Bold}, tablewriter.Colors{tablewriter.Bold},
-		tablewriter.Colors{tablewriter.Bold}, tablewriter.Colors{tablewriter.Bold})
+		tablewriter.Colors{tablewriter.Bold}, tablewriter.Colors{tablewriter.Bold}, tablewriter.Colors{tablewriter.Bold})
 	table.SetRowLine(true)
 
 	for i := range memos {
-		colors := []tablewriter.Colors{{}, {}, {}, {}}
-		if memos[i].Priority == types.MEMO_PRIORITY__IMPORTANT {
-			colors[3] = tablewriter.Colors{tablewriter.FgRedColor}
+		colors := []tablewriter.Colors{{}, {}, {}, {}, {}}
+		if memos[i].Priority == types.MemoPriorityImportant {
+			colors[4] = tablewriter.Colors{tablewriter.FgRedColor}
 		}
-		table.Rich([]string{memos[i].Name, memos[i].Date, memos[i].Content, memos[i].Priority.String()}, colors)
+		table.Rich([]string{strconv.Itoa(i + 1), memos[i].Name, memos[i].Date, memos[i].Content,
+			memos[i].Priority.String()}, colors)
 	}
 
 	table.Render()

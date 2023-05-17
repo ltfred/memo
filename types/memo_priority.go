@@ -9,16 +9,16 @@ func init() {
 }
 
 const (
-	MEMO_PRIORITY__UNKNOWN MemoPriority = iota
-	MEMO_PRIORITY__IMPORTANT
-	MEMO_PRIORITY__GENERALLY
+	MemoPriorityUnknown MemoPriority = iota
+	MemoPriorityImportant
+	MemoPriorityGenerally
 )
 
 func (priority MemoPriority) String() string {
 	switch priority {
-	case MEMO_PRIORITY__IMPORTANT:
+	case MemoPriorityImportant:
 		return "Important"
-	case MEMO_PRIORITY__GENERALLY:
+	case MemoPriorityGenerally:
 		return "Generally"
 	default:
 		return "Unknown"
@@ -28,10 +28,10 @@ func (priority MemoPriority) String() string {
 func ParseMemoPriorityFromString(s string) MemoPriority {
 	switch s {
 	case "Important":
-		return MEMO_PRIORITY__IMPORTANT
+		return MemoPriorityImportant
 	case "Generally":
-		return MEMO_PRIORITY__GENERALLY
+		return MemoPriorityGenerally
 	default:
-		return MEMO_PRIORITY__UNKNOWN
+		return MemoPriorityUnknown
 	}
 }
