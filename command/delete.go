@@ -1,6 +1,7 @@
 package command
 
 import (
+	"errors"
 	"github.com/ltfred/memo/pkg/parser"
 	"github.com/urfave/cli"
 )
@@ -24,7 +25,12 @@ func init() {
 }
 
 func deleteAction(c *cli.Context) error {
+	uuid := c.String("u")
+	if uuid == "" {
+		return errors.New("should use `memo d -u <uuid>`")
+	}
+
 	par := parser.Parser{}
 
-	return par.Delete(c.String("u"))
+	return par.Delete(uuid)
 }
