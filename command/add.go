@@ -2,11 +2,12 @@ package command
 
 import (
 	"errors"
+	"time"
+
 	"github.com/ltfred/memo/pkg/parser"
 	"github.com/ltfred/memo/types"
 	"github.com/manifoldco/promptui"
 	"github.com/urfave/cli"
-	"time"
 )
 
 var Add cli.Command

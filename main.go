@@ -1,10 +1,11 @@
 package main
 
 import (
-	"github.com/ltfred/memo/command"
-	"github.com/urfave/cli"
 	"log"
 	"os"
+
+	"github.com/ltfred/memo/command"
+	"github.com/urfave/cli"
 )
 
 func main() {

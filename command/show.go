@@ -1,15 +1,16 @@
 package command
 
 import (
-	"github.com/ltfred/memo/pkg/parser"
-	"github.com/ltfred/memo/types"
-	"github.com/olekukonko/tablewriter"
-	"github.com/urfave/cli"
 	"os"
 	"sort"
 	"strconv"
 	"strings"
 	"time"
+
+	"github.com/ltfred/memo/pkg/parser"
+	"github.com/ltfred/memo/types"
+	"github.com/olekukonko/tablewriter"
+	"github.com/urfave/cli"
 )
 
 var Show cli.Command

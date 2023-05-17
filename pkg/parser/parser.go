@@ -3,9 +3,10 @@ package parser
 import (
 	"encoding/json"
 	"errors"
-	"github.com/ltfred/memo/utils"
 	"os"
 	"strconv"
+
+	"github.com/ltfred/memo/utils"
 )
 
 type Parser struct{}

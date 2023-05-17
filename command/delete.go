@@ -2,6 +2,7 @@ package command
 
 import (
 	"errors"
+
 	"github.com/ltfred/memo/pkg/parser"
 	"github.com/urfave/cli"
 )

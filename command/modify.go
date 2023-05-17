@@ -3,6 +3,7 @@ package command
 import (
 	"errors"
 	"fmt"
+
 	"github.com/ltfred/memo/pkg/parser"
 	"github.com/ltfred/memo/types"
 	"github.com/manifoldco/promptui"
