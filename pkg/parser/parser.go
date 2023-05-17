@@ -2,6 +2,7 @@ package parser
 
 import (
 	"encoding/json"
+	"errors"
 	"github.com/ltfred/memo/utils"
 	"os"
 	"strconv"
@@ -31,6 +32,28 @@ func (pa *Parser) Delete(uuid string) error {
 	delete(memosMap, uuid)
 
 	return pa.write(memosMap)
+}
+
+func (pa *Parser) Modify(uuid string, data Memo) error {
+	memosMap, err := pa.read()
+	if err != nil {
+		return err
+	}
+	memosMap[uuid] = data
+
+	return pa.write(memosMap)
+}
+
+func (pa *Parser) GetRecord(uuid string) (Memo, error) {
+	memosMap, err := pa.read()
+	if err != nil {
+		return Memo{}, err
+	}
+	if _, ok := memosMap[uuid]; !ok {
+		return Memo{}, errors.New("record not exist")
+	}
+
+	return memosMap[uuid], nil
 }
 
 func (pa *Parser) read() (map[string]Memo, error) {
