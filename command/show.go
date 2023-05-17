@@ -13,7 +13,7 @@ import (
 var Show cli.Command
 
 func init() {
-	Add = cli.Command{
+	Show = cli.Command{
 		Name:    "show",
 		Aliases: []string{"s"},
 		Usage:   "show all record",
