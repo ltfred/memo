@@ -4,26 +4,37 @@ import (
 	"encoding/json"
 	"github.com/ltfred/memo/utils"
 	"os"
+	"strconv"
 )
 
 type Parser struct{}
 
 func (pa *Parser) Add(data Memo) error {
-	memos, err := pa.read()
+	memosMap, err := pa.read()
 	if err != nil {
 		return err
 	}
 
-	memos = append(memos, data)
-	return pa.write(memos)
+	memosMap[strconv.FormatInt(data.CreateAt, 10)] = data
+	return pa.write(memosMap)
 }
 
-func (pa *Parser) Show() ([]Memo, error) {
+func (pa *Parser) Show() (map[string]Memo, error) {
 	return pa.read()
 }
 
-func (pa *Parser) read() ([]Memo, error) {
-	var data []Memo
+func (pa *Parser) Delete(uuid string) error {
+	memosMap, err := pa.read()
+	if err != nil {
+		return err
+	}
+	delete(memosMap, uuid)
+
+	return pa.write(memosMap)
+}
+
+func (pa *Parser) read() (map[string]Memo, error) {
+	data := make(map[string]Memo, 0)
 	path := utils.GetFilePath()
 	if utils.FileIsExist(path) {
 		file, err := os.OpenFile(path, os.O_RDWR, 0666)
@@ -44,7 +55,7 @@ func (pa *Parser) read() ([]Memo, error) {
 	return data, nil
 }
 
-func (pa *Parser) write(data []Memo) (err error) {
+func (pa *Parser) write(data map[string]Memo) (err error) {
 	path := utils.GetFilePath()
 	var file *os.File
 	if utils.FileIsExist(path) {

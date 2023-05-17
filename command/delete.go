@@ -1,6 +1,9 @@
 package command
 
-import "github.com/urfave/cli"
+import (
+	"github.com/ltfred/memo/pkg/parser"
+	"github.com/urfave/cli"
+)
 
 var Delete cli.Command
 
@@ -9,10 +12,19 @@ func init() {
 		Name:    "delete",
 		Aliases: []string{"d"},
 		Usage:   "delete record",
-		Action:  deleteAction,
+		Flags: []cli.Flag{
+			cli.StringFlag{
+				Name:     "u",
+				Usage:    "delete record by uuid",
+				Required: true,
+			},
+		},
+		Action: deleteAction,
 	}
 }
 
 func deleteAction(c *cli.Context) error {
-	return nil
+	par := parser.Parser{}
+
+	return par.Delete(c.String("u"))
 }

@@ -5,21 +5,21 @@ type MemoPriority uint8
 var MemoPriorityValues []string
 
 func init() {
-	MemoPriorityValues = []string{"Important", "Generally"}
+	MemoPriorityValues = []string{"High", "Low"}
 }
 
 const (
 	MemoPriorityUnknown MemoPriority = iota
-	MemoPriorityImportant
-	MemoPriorityGenerally
+	MemoPriorityHigh
+	MemoPriorityLow
 )
 
 func (priority MemoPriority) String() string {
 	switch priority {
-	case MemoPriorityImportant:
-		return "Important"
-	case MemoPriorityGenerally:
-		return "Generally"
+	case MemoPriorityHigh:
+		return "High"
+	case MemoPriorityLow:
+		return "Low"
 	default:
 		return "Unknown"
 	}
@@ -27,10 +27,10 @@ func (priority MemoPriority) String() string {
 
 func ParseMemoPriorityFromString(s string) MemoPriority {
 	switch s {
-	case "Important":
-		return MemoPriorityImportant
-	case "Generally":
-		return MemoPriorityGenerally
+	case "High":
+		return MemoPriorityHigh
+	case "Low":
+		return MemoPriorityLow
 	default:
 		return MemoPriorityUnknown
 	}

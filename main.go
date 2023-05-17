@@ -12,7 +12,7 @@ func main() {
 		Name:  "memo",
 		Usage: "This is a command line memo.",
 	}
-	app.Commands = cli.Commands{command.Add, command.Show}
+	app.Commands = cli.Commands{command.Add, command.Show, command.Delete}
 
 	if err := app.Run(os.Args); err != nil {
 		log.Fatal(err)
