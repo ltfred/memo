@@ -18,12 +18,46 @@ func init() {
 		Usage:   "modify record",
 		Flags: []cli.Flag{
 			cli.StringFlag{
-				Name:  "u",
+				Name:  "u, uuid",
 				Usage: "modify record by uuid",
 			},
 		},
 		Action: modifyAction,
+		Subcommands: []cli.Command{
+			{
+				Name:    "status",
+				Aliases: []string{"s"},
+				Usage:   "modify record status by uuid",
+				Flags: []cli.Flag{
+					cli.StringFlag{
+						Name:     "u, uuid",
+						Usage:    "modify record status by uuid",
+						Required: true,
+					},
+				},
+				Action: modifyStatusAction,
+			},
+		},
 	}
+}
+
+func modifyStatusAction(c *cli.Context) error {
+	uuid := c.String("uuid")
+	par := parser.Parser{}
+	record, err := par.GetRecord(uuid)
+	if err != nil {
+		return err
+	}
+
+	sel := promptui.Select{Label: fmt.Sprintf("Status(%s)", record.Status.String()), Items: types.MemoStatusValues}
+	_, status, err := sel.Run()
+	if err != nil {
+		return err
+	}
+
+	record.Status = types.ParseMemoStatusFromString(status)
+
+	return par.Modify(uuid, record)
 }
 
 func modifyAction(c *cli.Context) error {
