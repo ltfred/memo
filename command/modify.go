@@ -4,8 +4,9 @@ import (
 	"errors"
 	"fmt"
 
+	"github.com/ltfred/memo/constant"
+
 	"github.com/ltfred/memo/pkg/parser"
-	"github.com/ltfred/memo/types"
 	"github.com/manifoldco/promptui"
 	"github.com/urfave/cli"
 )
@@ -50,13 +51,13 @@ func modifyStatusAction(c *cli.Context) error {
 		return err
 	}
 
-	sel := promptui.Select{Label: fmt.Sprintf("Status(%s)", record.Status.String()), Items: types.MemoStatusValues}
+	sel := promptui.Select{Label: fmt.Sprintf("Status(%s)", record.Status), Items: constant.MemoStatusValues}
 	_, status, err := sel.Run()
 	if err != nil {
 		return err
 	}
 
-	record.Status = types.ParseMemoStatusFromString(status)
+	record.Status = status
 
 	return par.Modify(uuid, record)
 }
@@ -95,7 +96,7 @@ func modifyAction(c *cli.Context) error {
 		return err
 	}
 
-	sel := promptui.Select{Label: fmt.Sprintf("Priority(%s)", record.Priority), Items: types.MemoPriorityValues}
+	sel := promptui.Select{Label: fmt.Sprintf("Priority(%s)", record.Priority), Items: constant.MemoPriorityValues}
 	if _, priority, err = sel.Run(); err != nil {
 		return err
 	}
@@ -103,7 +104,7 @@ func modifyAction(c *cli.Context) error {
 	record.Name = name
 	record.Date = date
 	record.Content = content
-	record.Priority = types.ParseMemoPriorityFromString(priority)
+	record.Priority = priority
 
 	return par.Modify(uuid, record)
 }

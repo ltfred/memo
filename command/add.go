@@ -4,8 +4,9 @@ import (
 	"errors"
 	"time"
 
+	"github.com/ltfred/memo/constant"
+
 	"github.com/ltfred/memo/pkg/parser"
-	"github.com/ltfred/memo/types"
 	"github.com/manifoldco/promptui"
 	"github.com/urfave/cli"
 )
@@ -57,7 +58,7 @@ func addAction(c *cli.Context) error {
 		return err
 	}
 
-	sel := promptui.Select{Label: "Priority", Items: types.MemoPriorityValues}
+	sel := promptui.Select{Label: "Priority", Items: constant.MemoPriorityValues}
 	if _, priority, err = sel.Run(); err != nil {
 		return err
 	}
@@ -68,8 +69,8 @@ func addAction(c *cli.Context) error {
 		Name:     name,
 		Date:     date,
 		Content:  content,
-		Priority: types.ParseMemoPriorityFromString(priority),
-		Status:   types.MemoStatusUndo,
+		Priority: priority,
+		Status:   constant.MemoStatusUndo,
 		CreateAt: time.Now().Unix(),
 	})
 }
