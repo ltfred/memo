@@ -33,8 +33,8 @@ func init() {
 				Usage: "filter record with status",
 			},
 			cli.StringFlag{
-				Name:  "sort",
-				Usage: "sort record with value, value: [p(priority),[asc,desc]; d(date),[asc,desc]]",
+				Name:  "o, order",
+				Usage: "order by, value: [p(priority),[asc,desc]; d(date),[asc,desc]]",
 			},
 		},
 		Action: showAction,
@@ -83,7 +83,7 @@ func showAction(c *cli.Context) error {
 	}
 
 	sort.Slice(memos, func(i, j int) bool {
-		s := strings.Split(c.String("sort"), ",")
+		s := strings.Split(c.String("order"), ",")
 		switch len(s) {
 		case 1:
 			switch s[0] {
