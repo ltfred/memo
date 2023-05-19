@@ -57,6 +57,10 @@ func (pa *Parser) GetRecord(uuid string) (Memo, error) {
 	return memosMap[uuid], nil
 }
 
+func (pa *Parser) Clear() error {
+	return pa.write(map[string]Memo{})
+}
+
 func (pa *Parser) read() (map[string]Memo, error) {
 	data := make(map[string]Memo, 0)
 	path := utils.GetFilePath()
