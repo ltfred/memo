@@ -52,12 +52,9 @@ func modifyStatusAction(c *cli.Context) error {
 	}
 
 	sel := promptui.Select{Label: fmt.Sprintf("Status(%s)", record.Status), Items: constant.MemoStatusValues}
-	_, status, err := sel.Run()
-	if err != nil {
+	if _, record.Status, err = sel.Run(); err != nil {
 		return err
 	}
-
-	record.Status = status
 
 	return par.Modify(uuid, record)
 }
@@ -74,37 +71,25 @@ func modifyAction(c *cli.Context) error {
 		return err
 	}
 
-	var (
-		name     string
-		date     string
-		content  string
-		priority string
-	)
-
 	prompt := promptui.Prompt{Label: fmt.Sprintf("Name(%s)", record.Name), Default: record.Name}
-	if name, err = prompt.Run(); err != nil {
+	if record.Name, err = prompt.Run(); err != nil {
 		return err
 	}
 
 	prompt = promptui.Prompt{Label: fmt.Sprintf("Date(%s)", record.Date), Default: record.Date}
-	if date, err = prompt.Run(); err != nil {
+	if record.Date, err = prompt.Run(); err != nil {
 		return err
 	}
 
 	prompt = promptui.Prompt{Label: "Content", Default: record.Content}
-	if content, err = prompt.Run(); err != nil {
+	if record.Content, err = prompt.Run(); err != nil {
 		return err
 	}
 
 	sel := promptui.Select{Label: fmt.Sprintf("Priority(%s)", record.Priority), Items: constant.MemoPriorityValues}
-	if _, priority, err = sel.Run(); err != nil {
+	if _, record.Priority, err = sel.Run(); err != nil {
 		return err
 	}
-
-	record.Name = name
-	record.Date = date
-	record.Content = content
-	record.Priority = priority
 
 	return par.Modify(uuid, record)
 }
